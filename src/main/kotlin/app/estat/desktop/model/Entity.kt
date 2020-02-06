@@ -23,3 +23,5 @@ class Bull(val name: String, val number: String) {
 class Mate(publicId: String, val date: Date, val cow: Cow, val bull: Bull) : Entity(publicId)
 
 class Lactation(publicId: String, val number: String, val date: Date, val cow: Cow) : Entity(publicId)
+
+class Module(publicId: String, val name: String, val description: String) : Entity(publicId)
