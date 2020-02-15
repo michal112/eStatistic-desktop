@@ -1,12 +1,9 @@
-package com.example.demo.view
+package app.estat.desktop.view
 
-import com.example.demo.app.Styles
+import app.estat.desktop.comp.Card
+import app.estat.desktop.model.Module
 import tornadofx.*
 
-class MainView : View("Hello TornadoFX") {
-    override val root = hbox {
-        label(title) {
-            addClass(Styles.heading)
-        }
-    }
+class MainView: View() {
+    override val root = Card(Module("sad","das","dsa"))
 }
