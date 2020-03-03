@@ -13,6 +13,6 @@ class CowDelegation : ReadOnlyProperty<ManageCowsController, List<Cow>> {
         if (cache.cows.isEmpty()) {
             cache.fetchCows()
         }
-        return cache.cows
+        return cache.cows.values.toList()
     }
 }

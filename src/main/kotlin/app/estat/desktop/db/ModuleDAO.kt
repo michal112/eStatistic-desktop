@@ -5,6 +5,7 @@ import app.estat.desktop.model.ModuleData
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.lang.UnsupportedOperationException
 import java.util.*
 
 class ModuleDAO : DAO<ModuleData, Module> {
@@ -31,5 +32,9 @@ class ModuleDAO : DAO<ModuleData, Module> {
             }
         }
         return module
+    }
+
+    override fun delete(entity: Module) {
+        throw UnsupportedOperationException()
     }
 }

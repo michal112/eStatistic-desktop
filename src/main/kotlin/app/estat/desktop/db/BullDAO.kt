@@ -30,4 +30,11 @@ class BullDAO : DAO<BullData, Bull> {
         }
         return bull
     }
+
+    override fun delete(bull: Bull) {
+        transaction(DbHelper.db) {
+            addLogger(StdOutSqlLogger)
+            bull.delete()
+        }
+    }
 }

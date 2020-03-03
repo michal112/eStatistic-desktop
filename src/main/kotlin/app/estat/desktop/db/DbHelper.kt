@@ -42,4 +42,16 @@ object DbHelper {
     fun getAllBulls() : List<Bull> {
         return bullDAO.getAll()
     }
+
+    fun createCow(cowData: CowData) : Cow {
+        return cowDAO.create(cowData)
+    }
+
+    fun createBull(bullData: BullData) : Bull {
+        return bullDAO.create(bullData)
+    }
+
+    fun deleteCow(cow: Cow) {
+        cowDAO.delete(cow)
+    }
 }

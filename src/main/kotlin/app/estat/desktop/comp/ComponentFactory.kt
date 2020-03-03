@@ -11,7 +11,9 @@ object ComponentFactory {
         return cardView
     }
 
-    fun createEditTextComponent(action: EditTextView.EditTextBuilder.() -> Unit) : EditTextView {
-        return EditTextView.EditTextBuilder().apply(action).build()
+    fun createEditTextComponent(parent: Node?, action: EditTextView.EditTextBuilder.() -> Unit) : EditTextView {
+        val editTextView = EditTextView.EditTextBuilder().apply(action).build()
+        parent?.getChildList()?.add(editTextView)
+        return editTextView
     }
 }

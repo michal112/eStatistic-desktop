@@ -5,6 +5,7 @@ import app.estat.desktop.model.CowData
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
+import tornadofx.*
 import java.util.*
 
 class CowDAO : DAO<CowData, Cow> {
@@ -25,11 +26,18 @@ class CowDAO : DAO<CowData, Cow> {
                     publicId = UUID.randomUUID().toString()
                     name = data.name
                     number = data.number
-                    birthday = data.birthday
-                    book = data.book
+//                    birthday = data.birthday
+//                    book = data.book.value
                 }
             }
         }
         return cow
+    }
+
+    override fun delete(cow: Cow) {
+        transaction(DbHelper.db) {
+            addLogger(StdOutSqlLogger)
+            cow.delete()
+        }
     }
 }

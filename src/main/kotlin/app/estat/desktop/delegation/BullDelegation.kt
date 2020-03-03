@@ -16,6 +16,6 @@ class BullDelegation : ReadOnlyProperty<ManageBullsController, List<Bull>> {
         if (cache.bulls.isEmpty()) {
             cache.fetchBulls()
         }
-        return cache.bulls
+        return cache.bulls.values.toList()
     }
 }

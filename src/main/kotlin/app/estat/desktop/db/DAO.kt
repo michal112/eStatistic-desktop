@@ -7,5 +7,7 @@ interface DAO<T : Data, E : IntEntity> {
     fun getAll() : List<E>
 
     fun create(data: T) : E
+
+    fun delete(entity: E)
 }
 

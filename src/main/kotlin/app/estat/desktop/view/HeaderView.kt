@@ -1,6 +1,5 @@
 package app.estat.desktop.view
 
-import app.estat.desktop.app.MyStyles
 import javafx.geometry.Pos
 import javafx.scene.paint.Color
 import tornadofx.*
@@ -11,12 +10,9 @@ class HeaderView : View() {
     }
 
     override val root = stackpane {
-        addClass(MyStyles.header)
         alignment = Pos.BOTTOM_CENTER
         vbox {
-            imageview(PHOTO_PATH) {
-                addClass(MyStyles.headerImage)
-            }
+            imageview(PHOTO_PATH)
             rectangle {
                 fill = AppColor.MAIN.color
                 width = 512.0
@@ -24,7 +20,8 @@ class HeaderView : View() {
             }
         }
         stackpane {
-            addClass(MyStyles.headerCircle)
+            maxWidth = 42.5
+            maxHeight = 42.5
             circle {
                 fill = AppColor.MAIN.color
                 radius = 42.5

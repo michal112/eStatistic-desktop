@@ -15,6 +15,6 @@ class ModuleDelegation : ReadOnlyProperty<DashboardController, List<Module>> {
         if (cache.modules.isEmpty()) {
             cache.fetchModules()
         }
-        return cache.modules
+        return cache.modules.values.toList()
     }
 }
