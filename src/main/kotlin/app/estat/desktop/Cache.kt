@@ -1,10 +1,7 @@
 package app.estat.desktop
 
 import app.estat.desktop.db.DbHelper
-import app.estat.desktop.model.Bull
-import app.estat.desktop.model.Cow
-import app.estat.desktop.model.CowData
-import app.estat.desktop.model.Module
+import app.estat.desktop.model.*
 
 object Cache {
     val modules: MutableMap<String, Module> = mutableMapOf()
@@ -30,12 +27,17 @@ object Cache {
     }
 
     fun putCow(cowData: CowData) {
-//        val cow = DbHelper.createCow(cowData)
-//        cows.putIfAbsent(cow.publicId, cow)
+        val cow = DbHelper.createCow(cowData)
+        cows.putIfAbsent(cow.publicId, cow)
     }
 
     fun removeCow(publicId: String) {
         cows[publicId]?.let { DbHelper.deleteCow(it) }
         cows.remove(publicId)
+    }
+
+    fun putBull(bullData: BullData) {
+        val bull = DbHelper.createBull(bullData)
+        bulls.putIfAbsent(bull.publicId, bull)
     }
 }

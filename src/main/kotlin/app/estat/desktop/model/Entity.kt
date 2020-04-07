@@ -26,7 +26,7 @@ class Cow(id: EntityID<Int>) : IntEntity(id) {
     var number by Cows.number
     var book by Cows.book
     var birthday by Cows.birthday
-    var bull by Bull referencedOn Cows.bull
+//    var bull by Bull referencedOn Cows.bull
 
     enum class Book {
         MAIN,
