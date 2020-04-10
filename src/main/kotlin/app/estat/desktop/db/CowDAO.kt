@@ -2,11 +2,10 @@ package app.estat.desktop.db
 
 import app.estat.desktop.model.Cow
 import app.estat.desktop.model.CowData
-import app.estat.desktop.util.toDateTime
+import app.estat.desktop.util.dateTime
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.util.*
 
 class CowDAO : DAO<CowData, Cow> {
     override fun getAll(): List<Cow> {
@@ -23,10 +22,10 @@ class CowDAO : DAO<CowData, Cow> {
             transaction(DbHelper.db) {
                 addLogger(StdOutSqlLogger)
                 Cow.new {
-                    publicId = UUID.randomUUID().toString()
+                    publicId = data.publicId!!
                     name = data.name
                     number = data.number
-                    birthday = data.birthday.toDateTime()
+                    birthday = data.birthday.dateTime()
                     book = data.book
                 }
             }

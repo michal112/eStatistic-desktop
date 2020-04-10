@@ -5,6 +5,7 @@ import app.estat.desktop.model.Cow
 import javafx.beans.property.Property
 import javafx.collections.FXCollections
 import javafx.scene.Node
+import javafx.scene.control.Button
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import tornadofx.*
@@ -14,18 +15,23 @@ abstract class AnimalView(name:String, number: String, image: String) : HBox() {
 
     init {
         addClass(MyStyles.animalView)
-        imageview(image) {
-            setFitHeight(40.0)
-            setPreserveRatio(true)
-        }
+        add(
+            imageview(image) {
+                setFitHeight(40.0)
+                setPreserveRatio(true)
+            }
+        )
         vbox {
+            addClass(MyStyles.animalViewNameContainer)
             label {
                 text = name
                 addClass(MyStyles.animalViewName)
             }
-            label {
-                text = number
-                addClass(MyStyles.animalViewNumber)
+            hbox {
+                label {
+                    text = number
+                    addClass(MyStyles.animalViewNumber)
+                }
             }
         }
     }
@@ -61,7 +67,7 @@ class CowView(name: String, description: String) : AnimalView(name, description,
 
 class BullView(name: String, description: String) : AnimalView(name, description, IMAGE) {
     companion object {
-        const val IMAGE = "/ic_bull.png"
+        const val IMAGE = "/ic_my_bulls.png"
     }
 
     class BullViewBuilder : AnimalViewBuilder<BullView>() {
@@ -75,11 +81,14 @@ class ModuleView(name: String, description: String, image: String) : HBox() {
 
     init {
         addClass(MyStyles.moduleView)
-        imageview(image) {
-            setFitHeight(40.0)
-            setPreserveRatio(true)
-        }
+        add(
+            imageview(image) {
+                setFitHeight(40.0)
+                setPreserveRatio(true)
+            }
+        )
         vbox {
+            addClass(MyStyles.moduleViewNameContainer)
             label {
                 text = name
                 addClass(MyStyles.moduleViewName)
@@ -123,7 +132,7 @@ class DatePickerView(image: String, value: Property<LocalDate>) : HBox() {
         hbox {
             addClass(MyStyles.datePickerViewImageContainer)
             imageview(image) {
-                setFitHeight(30.0)
+                setFitHeight(32.0)
                 setPreserveRatio(true)
             }
         }
@@ -162,7 +171,7 @@ class ComboBoxView<T>(image: String, items: List<T>, value: Property<T>) : HBox(
         hbox {
             addClass(MyStyles.comboBoxViewImageContainer)
             imageview(image) {
-                setFitHeight(30.0)
+                setFitHeight(32.0)
                 setPreserveRatio(true)
             }
         }
@@ -201,6 +210,55 @@ class ComboBoxView<T>(image: String, items: List<T>, value: Property<T>) : HBox(
     }
 }
 
+class TextView(image: String, title: String, value: String) : HBox() {
+
+    init {
+        addClass(MyStyles.textView)
+        hbox {
+            addClass(MyStyles.textViewImageContainer)
+            imageview(image) {
+                setFitHeight(32.0)
+                setPreserveRatio(true)
+            }
+        }
+        vbox {
+            addClass(MyStyles.textViewFieldContainer)
+            label {
+                addClass(MyStyles.textViewTitle)
+                text = title
+            }
+            label {
+                addClass(MyStyles.textViewValue)
+                text = value
+            }
+        }
+    }
+
+    class TextViewBuilder {
+        private lateinit var title: String
+
+        private lateinit var image: String
+
+        private lateinit var value: String
+
+        fun title(action: () -> String) {
+            apply { title = action() }
+        }
+
+        fun image(action: () -> String) {
+            apply { image = action() }
+        }
+
+        fun value(action: () -> String) {
+            apply { value = action() }
+        }
+
+        fun build() : TextView {
+            return TextView(image, title, value)
+        }
+    }
+}
+
 class EditTextView(image: String, hint: String, value: Property<String>) : HBox() {
 
     init {
@@ -208,7 +266,7 @@ class EditTextView(image: String, hint: String, value: Property<String>) : HBox(
         hbox {
             addClass(MyStyles.editTextViewImageContainer)
             imageview(image) {
-                setFitHeight(30.0)
+                setFitHeight(32.0)
                 setPreserveRatio(true)
             }
         }
@@ -279,6 +337,78 @@ class CardView(title: String, content: Node) : VBox() {
     }
 }
 
+class BackView(val back: () -> Unit) : Button() {
+
+    companion object {
+        const val IMAGE = "/ic_back.png"
+    }
+
+    init {
+        addClass(MyStyles.backView)
+        graphic = imageview(IMAGE) {
+            setFitHeight(32.0)
+            setPreserveRatio(true)
+        }
+        onLeftClick {
+            back()
+        }
+    }
+
+    class BackViewBuilder {
+        private lateinit var back: () -> Unit
+
+        fun back(action: () -> Unit) {
+            apply {
+                back = action
+            }
+        }
+
+        fun build() : BackView {
+            return BackView(back)
+        }
+    }
+}
+
+class DeleteView(val delete: () -> Unit) : Button() {
+
+    companion object {
+        const val IMAGE = "/ic_delete.png"
+    }
+
+    init {
+        addClass(MyStyles.deleteView)
+        graphic = imageview(IMAGE) {
+            setFitHeight(24.0)
+            setPreserveRatio(true)
+        }
+        onLeftClick {
+            delete()
+        }
+    }
+
+    class DeleteViewBuilder {
+        private lateinit var delete: () -> Unit
+
+        fun delete(action: () -> Unit) {
+            apply {
+                delete = action
+            }
+        }
+
+        fun build() : DeleteView {
+            return DeleteView(delete)
+        }
+    }
+}
+
+fun delete(parent: Node?, action: DeleteView.DeleteViewBuilder.() -> Unit) : DeleteView {
+    return ComponentFactory.createDeleteComponent(parent, action)
+}
+
+fun back(parent: Node?, action: BackView.BackViewBuilder.() -> Unit) : BackView {
+    return ComponentFactory.createBackComponent(parent, action)
+}
+
 fun datepicker(parent: Node?, action: DatePickerView.DatePickerViewBuilder.() -> Unit) : DatePickerView {
     return ComponentFactory.createDatePickerComponent(parent, action)
 }
@@ -287,16 +417,16 @@ fun combobox(parent: Node?, action: ComboBoxView.ComboBoxViewBuilder<Cow.Book>.(
     return ComponentFactory.createComboBoxComponent(parent, action)
 }
 
-fun bull(parent: Node?, action: BullView.BullViewBuilder.() -> Unit) : BullView {
-    return ComponentFactory.createBullComponent(parent, action)
+fun bull(action: BullView.BullViewBuilder.() -> Unit) : BullView {
+    return ComponentFactory.createBullComponent(action)
 }
 
-fun cow(parent: Node?, action: CowView.CowViewBuilder.() -> Unit) : CowView {
-    return ComponentFactory.createCowComponent(parent, action)
+fun cow(action: CowView.CowViewBuilder.() -> Unit) : CowView {
+    return ComponentFactory.createCowComponent(action)
 }
 
-fun module(parent: Node?, action: ModuleView.ModuleViewBuilder.() -> Unit) : ModuleView {
-    return ComponentFactory.createModuleComponent(parent, action)
+fun module(action: ModuleView.ModuleViewBuilder.() -> Unit) : ModuleView {
+    return ComponentFactory.createModuleComponent(action)
 }
 
 fun card(parent: Node?, action: CardView.CardViewBuilder.() -> Unit) : CardView {
@@ -305,4 +435,8 @@ fun card(parent: Node?, action: CardView.CardViewBuilder.() -> Unit) : CardView 
 
 fun edittext(parent: Node?, action: EditTextView.EditTextViewBuilder.() -> Unit) : EditTextView {
     return ComponentFactory.createEditTextComponent(parent, action)
+}
+
+fun text(parent: Node?, action: TextView.TextViewBuilder.() -> Unit) : TextView {
+    return ComponentFactory.createTextComponent(parent, action)
 }

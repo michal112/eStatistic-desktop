@@ -18,22 +18,16 @@ object ComponentFactory {
         return editTextView
     }
 
-    fun createModuleComponent(parent: Node?, action: ModuleView.ModuleViewBuilder.() -> Unit) : ModuleView {
-        val moduleView = ModuleView.ModuleViewBuilder().apply(action).build()
-        parent?.getChildList()?.add(moduleView)
-        return moduleView
+    fun createModuleComponent(action: ModuleView.ModuleViewBuilder.() -> Unit) : ModuleView {
+        return ModuleView.ModuleViewBuilder().apply(action).build()
     }
 
-    fun createCowComponent(parent: Node?, action: CowView.CowViewBuilder.() -> Unit) : CowView {
-        val cowView = CowView.CowViewBuilder().apply(action).build()
-        parent?.getChildList()?.add(cowView)
-        return cowView
+    fun createCowComponent(action: CowView.CowViewBuilder.() -> Unit) : CowView {
+        return CowView.CowViewBuilder().apply(action).build()
     }
 
-    fun createBullComponent(parent: Node?, action: BullView.BullViewBuilder.() -> Unit) : BullView {
-        val bullView = BullView.BullViewBuilder().apply(action).build()
-        parent?.getChildList()?.add(bullView)
-        return bullView
+    fun createBullComponent(action: BullView.BullViewBuilder.() -> Unit) : BullView {
+        return BullView.BullViewBuilder().apply(action).build()
     }
 
     fun createComboBoxComponent(parent: Node?, action: ComboBoxView.ComboBoxViewBuilder<Cow.Book>.() -> Unit): ComboBoxView<Cow.Book> {
@@ -46,5 +40,23 @@ object ComponentFactory {
         val datePickerView = DatePickerView.DatePickerViewBuilder().apply(action).build()
         parent?.getChildList()?.add(datePickerView)
         return datePickerView
+    }
+
+    fun createBackComponent(parent: Node?, action: BackView.BackViewBuilder.() -> Unit): BackView {
+        val backView = BackView.BackViewBuilder().apply(action).build()
+        parent?.getChildList()?.add(backView)
+        return backView
+    }
+
+    fun createTextComponent(parent: Node?, action: TextView.TextViewBuilder.() -> Unit): TextView {
+        val textView = TextView.TextViewBuilder().apply(action).build()
+        parent?.getChildList()?.add(textView)
+        return textView
+    }
+
+    fun createDeleteComponent(parent: Node?, action: DeleteView.DeleteViewBuilder.() -> Unit): DeleteView {
+        val deleteView = DeleteView.DeleteViewBuilder().apply(action).build()
+        parent?.getChildList()?.add(deleteView)
+        return deleteView
     }
 }

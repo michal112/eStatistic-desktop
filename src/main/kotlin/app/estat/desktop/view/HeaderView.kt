@@ -14,7 +14,7 @@ class HeaderView : View() {
         vbox {
             imageview(PHOTO_PATH)
             rectangle {
-                fill = AppColor.MAIN.color
+                fill = Color.color(0.0082352941, 0.396078431, 0.752941176)
                 width = 512.0
                 height = 45.0
             }
@@ -23,7 +23,7 @@ class HeaderView : View() {
             maxWidth = 42.5
             maxHeight = 42.5
             circle {
-                fill = AppColor.MAIN.color
+                fill = Color.color(0.0082352941, 0.396078431, 0.752941176)
                 radius = 42.5
                 alignment = Pos.CENTER
             }

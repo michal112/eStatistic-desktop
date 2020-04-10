@@ -5,8 +5,6 @@ import app.estat.desktop.model.ModuleData
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.lang.UnsupportedOperationException
-import java.util.*
 
 class ModuleDAO : DAO<ModuleData, Module> {
     override fun getAll() : List<Module> {
@@ -23,7 +21,7 @@ class ModuleDAO : DAO<ModuleData, Module> {
             transaction(DbHelper.db) {
                 addLogger(StdOutSqlLogger)
                 Module.new {
-                    publicId = UUID.randomUUID().toString()
+                    publicId = moduleData.publicId
                     name = moduleData.name
                     description = moduleData.description
                     image = moduleData.image

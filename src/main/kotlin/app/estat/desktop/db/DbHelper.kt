@@ -6,6 +6,7 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.util.*
 
 object DbHelper {
     val db by lazy {
@@ -19,16 +20,18 @@ object DbHelper {
         transaction(db) {
             addLogger(StdOutSqlLogger)
             SchemaUtils.create(Modules)
+            SchemaUtils.create(Cows)
+            SchemaUtils.create(Bulls)
         }
 
         initModules()
     }
 
     fun initModules() {
-        moduleDAO.create(ModuleData(name = "Dodaj buhaja", description = "Dodaj nowego buhaja", image = "/ic_my_bulls_add.png", action = Module.Action.ADD_BULL))
-        moduleDAO.create(ModuleData(name = "Dodaj krowę", description = "Dodaj nową krowę", image = "/ic_my_cows_add.png", action = Module.Action.ADD_COW))
-        moduleDAO.create(ModuleData(name = "Moje krowy", description = "Zarządzaj swoimi krowami", image = "/ic_my_cows.png", action = Module.Action.VIEW_COWS))
-        moduleDAO.create(ModuleData(name = "Moje buhaje", description = "Zarządzaj swoimi buhajami", image = "/ic_my_bulls.png", action = Module.Action.VIEW_BULLS))
+        moduleDAO.create(ModuleData(publicId = UUID.randomUUID().toString(), name = "Dodaj buhaja", description = "Dodaj nowego buhaja", image = "/ic_my_bulls_add.png", action = Module.Action.ADD_BULL))
+        moduleDAO.create(ModuleData(publicId = UUID.randomUUID().toString(), name = "Dodaj krowę", description = "Dodaj nową krowę", image = "/ic_my_cows_add.png", action = Module.Action.ADD_COW))
+        moduleDAO.create(ModuleData(publicId = UUID.randomUUID().toString(), name = "Moje krowy", description = "Zarządzaj swoimi krowami", image = "/ic_my_cows.png", action = Module.Action.VIEW_COWS))
+        moduleDAO.create(ModuleData(publicId = UUID.randomUUID().toString(), name = "Moje buhaje", description = "Zarządzaj swoimi buhajami", image = "/ic_my_bulls.png", action = Module.Action.VIEW_BULLS))
     }
 
     fun getAllModules() : List<Module> {
@@ -53,5 +56,9 @@ object DbHelper {
 
     fun deleteCow(cow: Cow) {
         cowDAO.delete(cow)
+    }
+
+    fun deleteBull(bull: Bull) {
+        bullDAO.delete(bull)
     }
 }

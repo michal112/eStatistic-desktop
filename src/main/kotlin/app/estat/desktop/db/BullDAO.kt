@@ -5,7 +5,6 @@ import app.estat.desktop.model.BullData
 import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
-import java.util.*
 
 class BullDAO : DAO<BullData, Bull> {
     override fun getAll(): List<Bull> {
@@ -22,7 +21,7 @@ class BullDAO : DAO<BullData, Bull> {
             transaction(DbHelper.db) {
                 addLogger(StdOutSqlLogger)
                 Bull.new {
-                    publicId = UUID.randomUUID().toString()
+                    publicId = data.publicId!!
                     name = data.name
                     number = data.number
                 }

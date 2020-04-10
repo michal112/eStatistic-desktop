@@ -9,7 +9,6 @@ class AddCowController : Controller() {
     val cowViewData = CowViewData(CowData())
 
     fun addCow() {
-        cowViewData.commit()
         Cache.putCow(cowViewData.item)
     }
 }
